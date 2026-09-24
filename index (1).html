@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amigo Secreto 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Shadows+Into+Light+Two&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#fef6e4;--paper2:#fff8e7;--ink:#3d2914;--rose:#d85a7a;--pink:#ff6b9d;--gold:#c89b3c}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Caveat,cursive;color:var(--ink)}
+body{overflow-x:hidden;background:radial-gradient(circle at 20% 10%,#4b1e3d,#1a0d1f 55%,#100812);min-height:100vh}
+button,input{font:inherit}.page{min-height:100vh;position:relative;overflow:hidden;padding:32px 16px}
+header{text-align:center;position:relative;z-index:2;animation:drop .7s ease}
+.title{font-size:clamp(42px,7vw,68px);font-weight:700;line-height:.9;margin:0}
+.subtitle{font-family:"Shadows Into Light Two",cursive;color:var(--rose);font-size:20px;margin-top:5px}
+.divider{display:flex;justify-content:center;align-items:center;gap:10px;color:var(--rose);font-size:25px;margin-top:8px}.divider i{display:block;width:65px;height:4px;border-radius:10px;background:#d85a7a66}
+.book{position:relative;max-width:900px;margin:25px auto 0;animation:appear .8s .15s both}
+.paper{position:relative;background:var(--paper);border-radius:28px;padding:42px 28px 35px;box-shadow:0 30px 70px #0008,inset 0 0 60px #d85a7a14;overflow:hidden}
+.paper:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 30%,#c89b3c10,transparent 35%),radial-gradient(circle at 80% 70%,#d85a7a10,transparent 35%),repeating-linear-gradient(0deg,transparent 0 6px,#3d291408 7px)}
+.spirals{position:absolute;top:-12px;left:4%;right:4%;display:flex;justify-content:space-around;z-index:4}.spiral{width:19px;height:19px;border:3px solid #8b5a3c;border-radius:50%;background:#e9d8b0;box-shadow:0 2px 3px #0005}
+.stamp{display:inline-block;border:3px solid var(--rose);color:var(--rose);padding:6px 12px;text-transform:uppercase;letter-spacing:2px;font-family:"Patrick Hand";font-weight:bold;transform:rotate(-7deg);opacity:.8}.topstamp{position:absolute;right:24px;top:24px}
+.content{position:relative;z-index:1;text-align:center}.emoji-big{font-size:80px;display:block;animation:pulse 1.8s infinite}
+h2{font-size:48px;margin:4px 0;color:var(--ink)}p{font-size:22px;line-height:1.3}
+.highlight{color:var(--rose);font-weight:700}.underline{position:relative;display:inline-block}.underline:after{content:"";position:absolute;left:-3px;right:-3px;bottom:-2px;height:9px;border-bottom:3px solid var(--pink);border-radius:50%}
+.checklist{max-width:510px;margin:22px auto;background:#fff8e7;border:1px solid #e8d9b0;border-radius:18px;padding:15px 20px;text-align:left;box-shadow:0 5px 14px #0000000c}.check{display:flex;gap:10px;align-items:center;font-size:22px;margin:7px 0}.check input{accent-color:var(--pink);width:20px;height:20px}.done{text-decoration:line-through;opacity:.45}.pink{color:var(--rose)}
+.btn{border:0;border-radius:999px;padding:13px 28px;background:linear-gradient(135deg,#ff8fab,#d85a7a);color:white;font-family:"Patrick Hand";font-size:21px;font-weight:bold;cursor:pointer;box-shadow:0 10px 22px #d85a7a55;transition:.2s}.btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 14px 28px #d85a7a66}.btn.secondary{background:#fff;border:2px dashed var(--rose);color:var(--rose);box-shadow:none}
+.note{font-size:18px;color:#3d2914aa;margin-top:10px}
+.users{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;max-width:700px;margin:25px auto}.user{position:relative;border:2px solid #e8d9b0;background:#fff8e7;border-radius:18px;padding:14px 8px;cursor:pointer;transition:.25s;box-shadow:0 5px 12px #0000000b}.user:hover{transform:translateY(-5px) rotate(-1deg);border-color:var(--rose)}.user .uemoji{font-size:34px}.user strong{display:block;font-size:22px}.user small{font-family:"Patrick Hand";color:#8b5a3c}
+.back{display:inline-block;margin-top:15px;color:var(--rose);cursor:pointer;font-family:"Patrick Hand";font-size:18px}
+.lock{font-size:65px;animation:float 3s ease-in-out infinite}.input-wrap{max-width:390px;margin:25px auto}.hand-input{width:100%;border:0;border-bottom:3px dashed var(--ink);background:transparent;text-align:center;outline:none;padding:10px;font-size:31px;letter-spacing:4px;color:var(--ink)}.hand-input:focus{border-color:var(--rose);border-style:solid}.error{color:#c03955;font-size:20px;min-height:28px;margin-top:10px}.hint{font-family:"Patrick Hand";color:#8b5a3c;margin:8px}
+.reveal{max-width:560px;margin:20px auto;padding:18px;border:2px dashed var(--rose);border-radius:18px;background:#fff8e7}.label{font-family:"Patrick Hand";text-transform:uppercase;letter-spacing:2px;color:var(--rose)}.recipient{font-size:54px;color:var(--rose);font-weight:bold;animation:pop .7s both}.gift{border-top:1px dashed #d85a7a66;border-bottom:1px dashed #d85a7a66;padding:12px;text-align:left;font-family:"Patrick Hand";font-size:21px;margin:15px 0}.message{font-size:23px}.footer{text-align:center;margin:28px 0 5px;font-size:20px;color:#f5ecd7cc}.float-sticker{position:fixed;z-index:1;font-size:28px;pointer-events:none;animation:fall linear infinite}
+.hidden{display:none!important}
+@keyframes appear{from{opacity:0;transform:scale(.94) translateY(20px)}to{opacity:1;transform:none}}@keyframes drop{from{opacity:0;transform:translateY(-25px)}to{opacity:1;transform:none}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}@keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-9px) rotate(3deg)}}@keyframes pop{0%{opacity:0;transform:scale(.5) rotate(-8deg)}70%{transform:scale(1.08)}100%{opacity:1;transform:none}}@keyframes fall{0%{transform:translateY(-10vh) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(110vh) translateX(80px) rotate(540deg);opacity:0}}
+@media(max-width:650px){.page{padding:22px 10px}.paper{padding:38px 16px 25px}.users{grid-template-columns:repeat(2,1fr)}h2{font-size:39px}.emoji-big{font-size:65px}.topstamp{position:relative;top:auto;right:auto;margin:0 auto 15px}.title{font-size:47px}.check{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="page" id="app">
+<header>
+  <div class="title">📓 Amigo Secreto 🌷</div>
+  <div class="subtitle">~ hecho a mano, con cariño ~</div>
+  <div class="divider"><i></i>♡<i></i></div>
+</header>
+<div class="book">
+  <div class="paper">
+    <div class="spirals" id="spirals"></div>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+<div class="footer">✿ para mis amigas favoritas, con todo mi amor ✿<br>🌷 🌸 💖 🌸 🌷</div>
+</div>
+
+<script>
+const DATA={
+ angela:{password:"angel",recipient:"María",nickname:"Angelita",emoji:"🌷",message:"Te tengo una sorpresita, y la verdad es que me costó elegirla porque tú te mereces el mundo entero",blessing:"Eres magia pura, nunca cambies",gift:"un ramillete de flores secas con una nota escrita a mano"},
+ maria:{password:"mary",recipient:"Noreisy",nickname:"Mari",emoji:"🌺",message:"Esta vez te tocó alguien que quiero mucho, cuídala con todo el corazón",blessing:"Que tu año esté lleno de momentos bonitos",gift:"un libro con marcadores personalizados"},
+ marbel:{password:"mar",recipient:"Gabriela",nickname:"Mar",emoji:"🌸",message:"Tu amiga secreta te conoce bien, vas a flipar con lo que te preparó",blessing:"Sigue siendo tan tú, que es lo más bonito que hay",gift:"una vela artesanal con aroma a vainilla y jazmín"},
+ gabriela:{password:"gaby",recipient:"Ángela",nickname:"Gaby",emoji:"🌹",message:"Le tengo mucho cariño a quién te tocó, sé que va a recibir algo hermoso",blessing:"Tu sonrisa es de las cosas que más bonita hace el mundo",gift:"un cuaderno nuevo con stickers y una pluma"},
+ noreisy:{password:"nori",recipient:"Sandra",nickname:"Noris",emoji:"💐",message:"Para alguien que tiene mi corazón, con todo el cariño de quien te conoce de toda la vida",blessing:"Que cada día te traten como tú mereces",gift:"una cobija calientita con su nombre bordado"},
+ sandra:{password:"sandy",recipient:"Maye",nickname:"Sandy",emoji:"🌼",message:"Tenía que ser algo especial, porque tú eres de las personas que no llegan dos veces",blessing:"Que tu corazón siga siendo tan noble",gift:"una caja de chocolates artesanales"},
+ maye:{password:"may",recipient:"Paola",nickname:"May",emoji:"🌻",message:"Me muero porque abras esto, va a ser algo que recordarás",blessing:"Brilla siempre, que se nota cuando brillas",gift:"un pequeño álbum de fotos personalizado"},
+ paola:{password:"pao",recipient:"Marbel",nickname:"Pao",emoji:"🌷",message:"Esto viene con toda la intención del mundo, espero que te haga sonreír",blessing:"No olvides lo muchísimo que te quieren",gift:"un kit de té con tacita cerámica"}
+};
+const USERS=[
+["maria","María","🌺","⭐"],["angela","Ángela","🌷","🌙"],["gabriela","Gabriela","🌹","✨"],["marbel","Marbel","🌸","🍃"],
+["noreisy","Noreisy","💐","🦋"],["sandra","Sandra","🌼","🍯"],["maye","Maye","🌻","🌟"],["paola","Paola","🌷","🎀"]
+];
+let selected=null;
+const content=document.getElementById("content");
+document.getElementById("spirals").innerHTML=Array.from({length:14},()=>'<span class="spiral"></span>').join("");
+
+function renderCover(){
+ content.innerHTML=`
+ <div class="topstamp stamp">top secret ♡</div>
+ <span class="emoji-big">🔒</span>
+ <h2>shhhh…</h2>
+ <p class="pink"><i>este cuaderno es <span class="underline">personalísimo</span></i></p>
+ <p>Dentro guardé las contraseñas secretas y, cuando estés lista, descubrirás quién es <b>tu amiga secreta</b> ✨ una sorpresita cuidada con mucho, mucho cariño 💌</p>
+ <div class="checklist">
+   <div class="check"><input type="checkbox" checked disabled><span class="done">olvidarse del amigo secreto</span></div>
+   <div class="check"><input type="checkbox" checked disabled><span class="done">no comprar el regalo</span></div>
+   <div class="check"><input type="checkbox" checked disabled><span class="pink"><b>pasarla increíble con mis amigas ♡</b></span></div>
+ </div>
+ <button class="btn" onclick="renderNames()">💌 abrir el cuaderno</button>
+ <div class="note">prometo que no hay spoilers… bueno, casi 🤭</div>`;
+}
+function renderNames(){
+ content.innerHTML=`
+ <div class="stamp">página 1 · selección</div>
+ <h2>¿quién eres? 🌸</h2>
+ <p>Elige tu nombre para abrir tu sobre secreto.</p>
+ <div class="users">${USERS.map(u=>`<button class="user" onclick="selectUser('${u[0]}')"><span class="uemoji">${u[2]}</span><strong>${u[1]}</strong><small>${u[3]} secreto</small></button>`).join("")}</div>
+ <div class="back" onclick="renderCover()">← volver a la portada</div>`;
+}
+function selectUser(id){
+ selected=id;
+ const d=DATA[id];
+ content.innerHTML=`
+ <div class="lock">🔐</div>
+ <h2>Hola, ${d.nickname} 💗</h2>
+ <p>Esta página está protegida.<br>Escribe tu <span class="pink"><b>palabra secreta</b></span>.</p>
+ <form class="input-wrap" onsubmit="checkPassword(event)">
+   <input id="pass" class="hand-input" type="password" autocomplete="off" placeholder="tu contraseña..." autofocus>
+   <div id="error" class="error"></div>
+   <button class="btn" type="submit">🔓 desbloquear</button>
+ </form>
+ <div class="hint">💭 pista: la contraseña es la que se usó para preparar tu sorpresa.</div>
+ <div class="back" onclick="renderNames()">← elegir otro nombre</div>`;
+}
+function checkPassword(e){
+ e.preventDefault();
+ const input=document.getElementById("pass"), error=document.getElementById("error");
+ if(input.value.trim().toLowerCase()===DATA[selected].password) renderSecret();
+ else {error.textContent="Mmm… no es esa, intenta otra vez 💭";input.value="";input.focus();input.animate([{transform:"translateX(-8px)"},{transform:"translateX(8px)"},{transform:"translateX(0)"}],{duration:350});}
+}
+function renderSecret(){
+ const d=DATA[selected];
+ content.innerHTML=`
+ <div class="stamp">secreto desbloqueado ♡</div>
+ <div class="emoji-big">${d.emoji}</div>
+ <h2>¡lo encontraste! 💌</h2>
+ <p class="message">Querida <b>${d.nickname}</b>,<br>${d.message}.</p>
+ <div class="reveal">
+   <div class="label">🤫 este año le regalas a...</div>
+   <div class="recipient">${d.recipient} 💖</div>
+ </div>
+ <button class="btn" onclick="renderLove()">✨ ver mi sorpresa completa</button>
+ <div class="back" onclick="selectUser('${selected}')">← volver</div>`;
+}
+function renderLove(){
+ const d=DATA[selected];
+ content.innerHTML=`
+ <div class="stamp">top secret · solo para ti</div>
+ <div class="emoji-big">💖</div>
+ <h2>tu sorpresa completa ✨</h2>
+ <p class="message">Para <b>${d.nickname}</b>, con muchísimo cariño.</p>
+ <div class="reveal">
+   <div class="label">🤫 tu amiga secreta es...</div>
+   <div class="recipient">${d.recipient} 💖</div>
+   <div class="gift">🎁 <b class="pink">idea de regalo:</b> ${d.gift}</div>
+   <p class="pink" style="font-size:24px"><i>✿ ${d.blessing} ✿</i></p>
+ </div>
+ <p>Guárdalo como el secreto más bonito 🤍</p>
+ <button class="btn" onclick="renderNames()">💌 volver al inicio</button>`;
+}
+const stickers=["🌸","🌺","🌷","🌹","💐","🌼","🌻","💖","💕","✨","⭐","🎀","🦋"];
+for(let i=0;i<14;i++){
+ const s=document.createElement("span");s.className="float-sticker";s.textContent=stickers[i%stickers.length];
+ s.style.left=(Math.random()*100)+"%";s.style.animationDuration=(8+Math.random()*9)+"s";s.style.animationDelay=(-Math.random()*12)+"s";
+ document.body.appendChild(s);
+}
+renderCover();
+</script>
+</body>
+</html>
